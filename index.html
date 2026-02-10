@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的网站</title>
+    <meta name="description" content="一个可直接部署的静态网站模板（HTML/CSS/JS + Docker）" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="container header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="brand__title">我的网站</div>
+          <div class="brand__sub">可直接部署的静态站点模板</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#features">功能</a>
+        <a href="#deploy">部署</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>上线一个网站，从这里开始。</h1>
+        <p>
+          这是一个<strong>零依赖</strong>的静态站点：你可以直接把文件上传到任何静态托管平台（如
+          Vercel/Netlify/Cloudflare Pages/GitHub Pages），也可以用 Docker 在服务器上运行。
+        </p>
+        <div class="hero__actions">
+          <button id="btnHello" class="btn btn--primary" type="button">点我测试 JS</button>
+          <a class="btn btn--ghost" href="#deploy">查看部署方式</a>
+        </div>
+        <div class="hero__meta">
+          <div class="pill">
+            <span class="pill__k">状态</span>
+            <span id="status" class="pill__v">就绪</span>
+          </div>
+          <div class="pill">
+            <span class="pill__k">构建</span>
+            <span class="pill__v">不需要</span>
+          </div>
+          <div class="pill">
+            <span class="pill__k">部署</span>
+            <span class="pill__v">静态 / Docker</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="grid">
+        <article class="card">
+          <h2>现代化 UI</h2>
+          <p>自带基础样式、响应式布局、暗色背景渐变和卡片组件，适合快速改成你的品牌风格。</p>
+        </article>
+        <article class="card">
+          <h2>可扩展</h2>
+          <p>你可以在此基础上升级到 React/Vue/Next.js；也可以加表单、埋点、CDN、甚至后端 API。</p>
+        </article>
+        <article class="card">
+          <h2>可直接上云</h2>
+          <p>支持“直接上传文件”与“Docker + Nginx”两种部署路线，满足从新手到生产的不同需求。</p>
+        </article>
+      </section>
+
+      <section id="deploy" class="card card--wide">
+        <h2>部署方式</h2>
+        <ol class="steps">
+          <li>
+            <strong>静态托管（最简单）</strong>：把本目录下的 <code>index.html</code>、<code>styles.css</code>、
+            <code>app.js</code> 上传到平台的发布目录即可。
+          </li>
+          <li>
+            <strong>Docker（服务器/容器化）</strong>：使用本项目的 <code>Dockerfile</code> 构建镜像，跑 Nginx
+            来提供静态文件。
+          </li>
+        </ol>
+        <p class="muted">详细步骤见 <code>README.md</code>。</p>
+      </section>
+
+      <section id="contact" class="footer">
+        <div class="footer__left">
+          <div class="muted">你可以把这段改成你的联系方式 / 社交媒体 / ICP 信息。</div>
+        </div>
+        <div class="footer__right">
+          <a class="muted" href="#" id="yearLink" aria-label="年份">©</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
