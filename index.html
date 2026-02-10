@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>我的网站</title>
-    <meta name="description" content="一个可直接部署的静态网站模板（HTML/CSS/JS + Docker）" />
+    <title>黄金价格实时看板</title>
+    <meta
+      name="description"
+      content="实时获取黄金价格并以图表展示的可视化看板，适用于 GitHub Pages 部署。"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -12,84 +15,101 @@
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
         <div>
-          <div class="brand__title">我的网站</div>
-          <div class="brand__sub">可直接部署的静态站点模板</div>
+          <div class="brand__title">黄金价格实时看板</div>
+          <div class="brand__sub">Gold Price Live Dashboard</div>
         </div>
       </div>
       <nav class="nav">
-        <a href="#features">功能</a>
-        <a href="#deploy">部署</a>
-        <a href="#contact">联系</a>
+        <a href="#overview">概览</a>
+        <a href="#chart">走势图</a>
+        <a href="#about">说明</a>
       </nav>
     </header>
 
     <main class="container">
-      <section class="hero">
-        <h1>上线一个网站，从这里开始。</h1>
+      <section id="overview" class="hero hero--gold">
+        <h1>实时黄金价格</h1>
         <p>
-          这是一个<strong>零依赖</strong>的静态站点：你可以直接把文件上传到任何静态托管平台（如
-          Vercel/Netlify/Cloudflare Pages/GitHub Pages），也可以用 Docker 在服务器上运行。
+          通过公开黄金价格数据接口获取最新价格，并以图表形式展示。页面在浏览器端周期性刷新数据，适合部署在
+          GitHub Pages 等纯静态托管平台。
         </p>
+
+        <div class="hero__stats">
+          <div class="stat-card">
+            <div class="stat-label">当前价格</div>
+            <div class="stat-value">
+              <span id="priceValue" class="price-number">--</span>
+              <span id="priceUnit" class="price-unit">USD/oz</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">最近更新</div>
+            <div id="lastUpdated" class="stat-meta">--</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">状态</div>
+            <div id="status" class="stat-status stat-status--idle">等待请求</div>
+          </div>
+        </div>
+
         <div class="hero__actions">
-          <button id="btnHello" class="btn btn--primary" type="button">点我测试 JS</button>
-          <a class="btn btn--ghost" href="#deploy">查看部署方式</a>
-        </div>
-        <div class="hero__meta">
-          <div class="pill">
-            <span class="pill__k">状态</span>
-            <span id="status" class="pill__v">就绪</span>
-          </div>
-          <div class="pill">
-            <span class="pill__k">构建</span>
-            <span class="pill__v">不需要</span>
-          </div>
-          <div class="pill">
-            <span class="pill__k">部署</span>
-            <span class="pill__v">静态 / Docker</span>
-          </div>
+          <button id="btnRefresh" class="btn btn--primary" type="button">立即刷新</button>
+          <span class="muted small-text">默认每 60 秒自动刷新一次</span>
         </div>
       </section>
 
-      <section id="features" class="grid">
+      <section id="chart" class="card card--wide chart-card">
+        <div class="chart-header">
+          <div>
+            <h2>黄金价格走势</h2>
+            <p class="muted small-text">本次打开页面后的价格变化（会话级别实时走势）</p>
+          </div>
+          <div class="chart-meta muted small-text" id="pointCount">数据点：0</div>
+        </div>
+        <div class="chart-body">
+          <canvas id="goldChart" aria-label="黄金价格折线图" role="img"></canvas>
+        </div>
+      </section>
+
+      <section id="about" class="grid grid--info">
         <article class="card">
-          <h2>现代化 UI</h2>
-          <p>自带基础样式、响应式布局、暗色背景渐变和卡片组件，适合快速改成你的品牌风格。</p>
+          <h2>数据来源</h2>
+          <p>
+            示例项目使用公开黄金现货价格 API（如 <code>api.metals.live</code> 等），仅用于学习和展示。若你拥有世界黄金协会
+            或其他机构的正式数据接口，只需在 <code>app.js</code> 中替换请求地址和解析逻辑即可。
+          </p>
         </article>
         <article class="card">
-          <h2>可扩展</h2>
-          <p>你可以在此基础上升级到 React/Vue/Next.js；也可以加表单、埋点、CDN、甚至后端 API。</p>
+          <h2>单位与换算</h2>
+          <p>
+            默认展示单位为美元/金衡盎司（USD/oz）。你也可以在脚本中增加换算逻辑，将其转换为人民币/克，并在界面上以
+            切换按钮的形式呈现。
+          </p>
         </article>
         <article class="card">
-          <h2>可直接上云</h2>
-          <p>支持“直接上传文件”与“Docker + Nginx”两种部署路线，满足从新手到生产的不同需求。</p>
+          <h2>部署与扩展</h2>
+          <p>
+            页面为纯前端实现，可直接部署在 GitHub Pages。若后续需要更复杂的权限控制或隐藏 API 密钥，建议增加
+            轻量后端（如 Vercel/Netlify Serverless 函数）作为数据代理层。
+          </p>
         </article>
       </section>
 
-      <section id="deploy" class="card card--wide">
-        <h2>部署方式</h2>
-        <ol class="steps">
-          <li>
-            <strong>静态托管（最简单）</strong>：把本目录下的 <code>index.html</code>、<code>styles.css</code>、
-            <code>app.js</code> 上传到平台的发布目录即可。
-          </li>
-          <li>
-            <strong>Docker（服务器/容器化）</strong>：使用本项目的 <code>Dockerfile</code> 构建镜像，跑 Nginx
-            来提供静态文件。
-          </li>
-        </ol>
-        <p class="muted">详细步骤见 <code>README.md</code>。</p>
-      </section>
-
-      <section id="contact" class="footer">
+      <section class="footer">
         <div class="footer__left">
-          <div class="muted">你可以把这段改成你的联系方式 / 社交媒体 / ICP 信息。</div>
+          <div class="muted small-text">
+            本页仅为示例，不构成任何投资建议。数据来源可能存在时延或误差，请以官方渠道为准。
+          </div>
         </div>
         <div class="footer__right">
-          <a class="muted" href="#" id="yearLink" aria-label="年份">©</a>
+          <a class="muted small-text" href="#" id="yearLink" aria-label="年份">©</a>
         </div>
       </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="./app.js" defer></script>
   </body>
 </html>
